@@ -3,9 +3,12 @@ Python based annotator for Kicad sch files, which groups components by label/typ
 
 It works as follows:
 
-1. Group by label, type, and footprint.
-2. Start with the top left component of each group and file.
+1. Group by label, type, and footprint.<br> ![Table](https://i.imgur.com/6YGpvwM.png)
+2. Start with the top left component of each group and file.<br>![Routing](https://i.imgur.com/uqjmNQk.png)
 3. Go to the nearest neighbour.
+
+
+
 
 
 ## Install
