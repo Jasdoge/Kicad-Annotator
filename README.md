@@ -8,8 +8,15 @@ It works as follows:
 3. Go to the nearest neighbour.
 
 
+## Why this method?
 
+This is primarily for hand soldering one-sided boards. What I do is print the symbol fields table from kicad, sorted by reference. Then go through with a spool of components one at a time. Ex:
 
+1. R1-**R10** are 10k 0805 resistors. Grab 10 of them and attach them to any R footprint valued R10 or below.
+2. R11-**R15** are 10 ohm 0805 resistors. Grab 5 of them and attach them to any *unoccupied* R footprint valued R15 or below.
+3. Repeat until you reach the end of the list.
+
+This means you don't have to look up each reference for each component. Just look if the reference value is lower than the highest one for that part.
 
 ## Install
 
