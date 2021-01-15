@@ -47,8 +47,13 @@ def assignTarget(component, verbose = False):
 	newid = '"'+newid+'"'
 	oldid = '"'+oldid+'"'
 
+	
+	# Search through lines and replace
 	for i in range(100):
 		line = file[row+i+1]
+		#if component["id"]+str(targetIterator) == "R6":
+		#	debug(verbose, "!! Row: "+str(row+i+1)+" Search: "+oldid+" in  : "+line+" >> "+str(oldid in line))
+			
 		if line.startswith("$EndComp"):
 			break	
 		if oldid in line:
@@ -106,11 +111,13 @@ def run(rootPath, rootFile, verbose = False):
 				if l.startswith("L "):
 					spl = shlex.split(l)
 					if spl[-1][0] != "#":	# Hashtag is used in power
+
 						endpos = re.search("[0-9\?]", spl[-1])
 						if endpos == None:
 							endpos = -1
 						else:
 							endpos = endpos.start()
+
 						id = spl[-1][0:endpos]
 						uuid = ""
 						line = linenr
@@ -119,7 +126,7 @@ def run(rootPath, rootFile, verbose = False):
 						val = ""
 						footprint = ""
 
-					
+						# Read until the next component
 						for i in range(50):
 							linenr = linenr+1
 							l = filecache[filename][linenr]
@@ -144,6 +151,23 @@ def run(rootPath, rootFile, verbose = False):
 								spl = shlex.split(l)
 								footprint = spl[2]
 
+							if l.startswith("AR Path="):
+								endpos = re.search("Ref=", l)
+								if endpos != None:
+									endpos = endpos.start()+5
+									id = l[endpos:]
+									endpos = re.search("[0-9\?]", id)
+									if endpos == None:
+										endpos = -1
+									else:
+										endpos = endpos.start()
+									id = id[:endpos]
+
+						if not id:
+							debug(verbose, "ERROR! Component ID missing for "+uuid)
+							continue
+
+						print("Detected: "+id+" on line "+str(line))					
 						entries.append({
 							"id" : id,
 							"lnr" : line,
