@@ -3,7 +3,7 @@ from cx_Freeze import setup, Executable
 #To build: "python setup.py build"
 
 setup(name = "KiCad Annotator" ,
-      version = "0.2" ,
+      version = "0.3" ,
       description = "Annotates sch files, grouping by type, value, footprint, and sheet." ,
       options = {
             "build_exe" : {

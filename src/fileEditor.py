@@ -37,7 +37,7 @@ def assignTarget(component, verbose = False):
 	
 	titleline = shlex.split(file[row])
 	newid = component["id"]+str(targetIterator)
-	oldid = titleline[2]
+	oldid = component["oldid"]
 	titleline[2] = newid
 	# +1 because editor is 1 based and file is 0 based
 	debug(verbose, "            Replace title line ("+str(row+1)+") with ", " ".join(titleline), "old:"+oldid, "new:"+newid)
@@ -112,13 +112,7 @@ def run(rootPath, rootFile, verbose = False):
 					spl = shlex.split(l)
 					if spl[-1][0] != "#":	# Hashtag is used in power
 
-						endpos = re.search("[0-9\?]", spl[-1])
-						if endpos == None:
-							endpos = -1
-						else:
-							endpos = endpos.start()
-
-						id = spl[-1][0:endpos]
+						fulluuid = ""
 						uuid = ""
 						line = linenr
 						x = 0
@@ -142,7 +136,18 @@ def run(rootPath, rootFile, verbose = False):
 								spl = shlex.split(l)
 								x = int(spl[1])
 								y = int(spl[2])
-								
+
+							# This is where the item label is stored
+							if l.startswith("F 0 "):
+								spl = shlex.split(l)
+								fulluuid = id = spl[2]
+								endpos = re.search("[0-9\?]", id)
+								if endpos == None:
+									endpos = -1
+								else:
+									endpos = endpos.start()
+								id = id[0:endpos]
+
 							if l.startswith("F 1 "):
 								spl = shlex.split(l)
 								val = spl[2]
@@ -170,6 +175,7 @@ def run(rootPath, rootFile, verbose = False):
 						print("Detected: "+id+" on line "+str(line))					
 						entries.append({
 							"id" : id,
+							"oldid" : fulluuid,
 							"lnr" : line,
 							"x" : x,
 							"y" : y,
