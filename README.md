@@ -1,36 +1,31 @@
-# Kicad-Annotator
-Python based annotator for Kicad sch files, which groups components by label/type/footprint
+# Kicad-Annotator - Updated to work as a PCB Plugin!
+KiCad now has support for update schematic from PCB. 
 
-It works as follows:
+It annotates in the following order:
 
-1. Group by label, type, and footprint.<br> ![Table](https://i.imgur.com/6YGpvwM.png)
-2. Start with the top left component of each group and file.<br>![Routing](https://i.imgur.com/uqjmNQk.png)
-3. Go to the nearest neighbour.
+1. Reference (Alphabetical)
+2. Value (Numeric where possible)
+3. Footprint (Alphabetical)
+4. X Position (Numeric)
 
+Example of a sort
+
+![Table](https://i.gyazo.com/d136dec244d2e7cf218fb618de396ef4.png)
 
 ## Why this method?
 
-This is primarily for hand soldering one-sided boards. What I do is print the symbol fields table from kicad, sorted by reference. Then go through with a spool of components one at a time. Ex:
+This is primarily for hand soldering one-sided boards. What I do is print the symbol fields table from kicad. Then go through with a spool of components one at a time. Ex:
 
-1. R1-**R10** are 10k 0805 resistors. Grab 10 of them and attach them to any R footprint valued R10 or below.
+1. R1-**R10** are 10k 0805 resistors. Grab 10 of them and attach them to any R footprint valued R10 or below. Start from the left. If you soldered R2 and the next component you see is R4, you know that R3 is between R2 and R4 on the X axis.
 2. R11-**R15** are 10 ohm 0805 resistors. Grab 5 of them and attach them to any *unoccupied* R footprint valued R15 or below.
 3. Repeat until you reach the end of the list.
 
-This means you don't have to look up each reference for each component. Just look if the reference value is lower than the highest one for that part.
+This means you don't have to look up each reference for each component. Just look if the reference value is lower or equal to the highest value for that part.
 
-## Install
+## Install / Usage
 
-If you have python 3.8.5+ installed, you can run src/ComponentSorter.py
-
-If you don't, you can run the exe in build.
-
-## How to use
-
-1. Click the big "Select Project File" button.
-2. Navigate to your kicad project, and select the project file you want to update. (Note: It will only update the schematic named the same as your project, and any sub-schematics of that)
-3. If this is the first time you run this script on that project, backups of the affected schematics will be created with the file extension .csbup. If a backup exists, you will be prompted if you want to overwrite it. Only overwrite a backup once you are sure the current .sch works.
-4. If everything worked as it should, your sch file(s) will be annotated. 
-5. If you have the schematic open in kicad, close it and open it again.
-6. [Opt] PCB files will not be updated. **Verify that your schematic file annotated properly in Kicad**. Then in Pcbnew, clickt he Update PCB from schematic button to update the annotations.
-
+1. Download HandSolderAnnotate.py from this repo.
+2. Put it in your KiCad plugin directory (on windows that's under Documents/KiCad/<version>/scripting/plugins)
+3. Open the PCB editor and go to Tools > External Plugins > Refresh Plugins.
+4. Go back to the same menu and Click Hand Solder Annotate to annotate your board. 
 
