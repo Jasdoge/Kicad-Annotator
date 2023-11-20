@@ -12,6 +12,9 @@ Example of a sort
 
 ![Table](https://i.gyazo.com/d136dec244d2e7cf218fb618de396ef4.png)
 
+On the board (10k 0603 resistor group)
+![10k Resistors](https://i.gyazo.com/71dd07f165c1b0ab3800ec80c1472d17.png)
+
 ## Why this method?
 
 This is primarily for hand soldering one-sided boards. What I do is print the symbol fields table from kicad. Then go through with a spool of components one at a time. Ex:
