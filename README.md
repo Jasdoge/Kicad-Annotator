@@ -30,5 +30,8 @@ This means you don't have to look up each reference for each component. Just loo
 1. Download HandSolderAnnotate.py from this repo.
 2. Put it in your KiCad plugin directory (on windows that's under Documents/KiCad/<version>/scripting/plugins)
 3. Open the PCB editor and go to Tools > External Plugins > Refresh Plugins.
-4. Go back to the same menu and Click Hand Solder Annotate to annotate your board. 
+4. **Consider taking a backup of your project, just in case!**
+5. Go back to the same menu and Click Hand Solder Annotate to annotate your board.
+6. Go to Tools -> Update Schematic from PCB
+7. **!! WARNING !! Make sure Re-link footprints is UNCHECKED or this will break your board.** You can enable the other checkboxes except Net names. Then click Update Schematic.
 
