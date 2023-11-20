@@ -22,11 +22,11 @@ def fileButtonClicked():
 	filedir = os.path.dirname(os.path.realpath(filepath))
 	filename = os.path.splitext(os.path.basename(os.path.realpath(filepath)))[0]
 	try:
-		stats = writeFiles(filedir, filename+".sch", True)
+		stats = writeFiles(filedir, filename+".kicad_sch", True)
 		text = "Update complete:\n  - Files updated: "+str(stats["files"])+"\n  - Components updated: "+str(stats["comp"])
 		if stats["bup"]:
 			text = text+"\n\nBackups have been made, with .csbup appended to the file name."
-		text = text+"\n\nNOTE: Only .sch files have been updated. Any PCB files will need to be updated by you.\nNOTE: If your .sch file is open you will need to close and re-open it to see the changes."
+		text = text+"\n\nNOTE: Only .kicad_sch files have been updated. Any PCB files will need to be updated by you.\nNOTE: If your .kicad_sch file is open you will need to close and re-open it to see the changes."
 		messagebox.showinfo(title="Operation complete!", message=text)
 	except DebugError as e:
 		messagebox.showerror(message=str(e))
